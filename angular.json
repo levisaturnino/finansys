@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "finansys"
+  "defaultProject": "finansys",
+  "cli": {
+    "analytics": "345394e4-1f37-401b-a51e-61ec4771637a"
+  }
 }
