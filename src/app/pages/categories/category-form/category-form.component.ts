@@ -5,8 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from "../shared/category.model"
 import { CategoryService } from '../shared/category.service';
 
-import { Toast } from 'ngx-toastr';
 import { switchMap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 
 @Component({
@@ -24,6 +26,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   category: Category = new Category()
 
   constructor(
+    private toastr: ToastrService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,10 +39,10 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
     if (this.currentAction == "new") {
       this.pageTitle = "Cadastro de Nova Categoria"
     } else {
-      const categoryName  = this.category.name || ""
-    this.pageTitle  = "Editando Categoria: "+this.category
-    } 
-   }
+      const categoryName = this.category.name || ""
+      this.pageTitle = "Editando Categoria: " + this.category
+    }
+  }
 
   ngOnInit(): void {
     this.setCurrentAction();
@@ -77,4 +80,38 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  private createCategory() {
+    const category: Category = Object.assign(new Category(), this.categoryForm.value)
+
+    this.categoryService.created(category).subscribe(
+      category => this.actionsForSuccess(category),
+      error => this.actionsForError(error)
+    )
+  }
+
+  private updateCategory() {
+  }
+
+  private actionsForSuccess(category: Category) {
+    this.toastr.success("Solicitação processada com sucesso!");
+
+    // redirect/reload component page
+    this.router.navigateByUrl("categories", { skipLocationChange: true }).then(
+      () => this.router.navigate(['categories', category.id, "edit"])
+    )
+  }
+
+  private actionsForError(error: any) {
+    this.toastr.success("Ocorreu um erro ao processar a sua solicitação!");
+
+    this.submittingForm = false
+    if (error.status === 422) {
+      this.serverErrorMessage = JSON.parse(error._body).errord
+    } else {
+      this.serverErrorMessage = ["Falha na comunicação com o servidor. Por Favor, teste mais tarde."]
+    }
+  }
+  private submitForm(){
+
+  }
 }
