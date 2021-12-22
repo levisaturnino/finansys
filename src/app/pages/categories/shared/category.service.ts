@@ -10,7 +10,7 @@ import { map,catchError } from 'rxjs/operators';
 
 export class CategoryService {
 
-  private  apiPath: string = "http://localhost:8080/categories";
+  private  apiPath: string = "https://apifinansys.herokuapp.com/categories";
 
   constructor(private http: HttpClient) { }
 
