@@ -18,7 +18,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   currentAction: string = ""
   categoryForm!: FormGroup;
   pageTitle: string = ""
-  serverErrorMessage: string[] = []
+  serverErrorMessages: string[] | undefined
   submittingForm: boolean = false
   category: Category = new Category()
 
@@ -111,11 +111,10 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
     this.submittingForm = false
     if (error.status === 422) {
-      this.serverErrorMessage = JSON.parse(error._body).errord
+      this.serverErrorMessages = JSON.parse(error._body).errord
     } else {
-      this.serverErrorMessage = ["Falha na comunicação com o servidor. Por Favor, teste mais tarde."]
+      this.serverErrorMessages = ["Falha na comunicação com o servidor. Por Favor, teste mais tarde."]
     }
-    console.log(this.serverErrorMessage)
   }
 
    submitForm(){
