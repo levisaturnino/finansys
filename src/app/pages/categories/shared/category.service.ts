@@ -2,14 +2,15 @@ import { Category } from './category.model';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  map,catchError } from 'rxjs/operators';
+import { map,catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CategoryService {
 
-  private  apiPath: string = "api/categories";
+  private  apiPath: string = "http://localhost:8080/categories";
 
   constructor(private http: HttpClient) { }
 
