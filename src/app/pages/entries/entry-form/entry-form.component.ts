@@ -90,13 +90,13 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   private setBuildEntryForm() {
     this.entryForm = this.formBuilder.group({
       id: [null],
-      name: ['', [Validators.required, Validators.minLength(2)]],
+      name: [null, [Validators.required, Validators.minLength(2)]],
       description: [null],
-      type: ['expense',[Validators.required]],
-      amount: [null,[Validators.required]],
-      date: [null,[Validators.required]],
-      paid: [true,[Validators.required]],
-      category_id: [null,[Validators.required]]
+      type: ['expense', [Validators.required]],
+      amount: [null, [Validators.required]],
+      date: [null, [Validators.required]],
+      paid: [true, [Validators.required]],
+      categoryId: [null, [Validators.required]],
     });
   }
 

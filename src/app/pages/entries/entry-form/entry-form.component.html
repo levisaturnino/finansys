@@ -109,14 +109,13 @@
          <!-- Type -->
     <div class="form-group col-3 mb-3">
           
-      <label for="categoriaId">Categoria</label>
-      <select  formControlName="categoriaId" class="form-control" name="categoriaId" id="categoriaId" >
+      <label for="categoryId">Categoria</label>
+      <select  formControlName="categoryId" class="form-control" name="categoryId" id="categoryId" >
         <option *ngFor="let category of categories" [value]="category?.id">{{category?.name}}</option>
-
       </select>
-      <div class="text-danger" *ngIf="entryForm.get('categoriaId')?.invalid && entryForm.get('categoriaId')?.touched">
-        <div *ngIf="entryForm.get('categoriaId')?.errors?.required">Dados obrigatório</div>
-        <div *ngIf="entryForm.get('categoriaId')?.errors?.minlength">deve ter no mínimo 2 caracteres</div>
+      <div class="text-danger" *ngIf="entryForm.get('categoryId')?.invalid && entryForm.get('categoryId')?.touched">
+        <div *ngIf="entryForm.get('categoryId')?.errors?.required">Dados obrigatório</div>
+        <div *ngIf="entryForm.get('categoryId')?.errors?.minlength">deve ter no mínimo 2 caracteres</div>
       </div>
     </div>
 
