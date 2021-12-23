@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map,catchError } from 'rxjs/operators';
+import { API } from '../../../api-url-router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { map,catchError } from 'rxjs/operators';
 
 export class CategoryService {
 
-  private  apiPath: string = "https://apifinansys.herokuapp.com/categories";
+  private  apiPath: string = `${API.address}/categories`
 
   constructor(private http: HttpClient) { }
 

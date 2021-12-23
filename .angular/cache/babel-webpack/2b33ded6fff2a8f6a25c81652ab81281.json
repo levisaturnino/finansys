@@ -1,0 +1,1 @@
+{"ast":null,"code":"export let API = /*#__PURE__*/(() => {\n  class API {}\n\n  //static  address: string = \"https://apifinansys.herokuapp.com\"\n  API.address = \"http://localhost:8080\";\n  return API;\n})();","map":null,"metadata":{},"sourceType":"module"}

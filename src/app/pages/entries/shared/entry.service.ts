@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map,catchError } from 'rxjs/operators';
+import { API } from '../../../api-url-router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { map,catchError } from 'rxjs/operators';
 
 export class EntryService {
 
-  private  apiPath: string = "https://apifinansys.herokuapp.com/entries";
+  private  apiPath: string = `${API.address}/entries`;
 
   constructor(private http: HttpClient) { }
 
@@ -54,13 +55,18 @@ export class EntryService {
 
   private jsonDataToEntries(jsonData: any[]):Entry[]{
     const entries: Entry[] = [];
-    jsonData.forEach(element => entries.push(element as Entry));
+
+    jsonData.forEach(element => {
+      const entry = Object.assign(new Entry(),element)
+      entries.push(entry)
+    });
+
     return entries;
   }
 
   private jsonDataToEntry(jsonData: any):Entry{
     const entries: Entry[] = [];
-    return jsonData as Entry;
+    return  Object.assign(new Entry(),jsonData)
   }
 
   private handleError(error: any):Observable<any>{

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export let API = /*#__PURE__*/(() => {\n  class API {}\n\n  API.address = \"https://apifinansys.herokuapp.com/\";\n  API.address = \"https://apifinansys.herokuapp.com/\";\n  return API;\n})();","map":null,"metadata":{},"sourceType":"module"}
