@@ -1,5 +1,5 @@
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Entry } from "../shared/entry.model"
@@ -9,6 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../categories/shared/category.model';
 import { CategoryService } from '../../categories/shared/category.service';
+
+
 
 @Component({
   selector: 'app-entry-form',
@@ -48,9 +50,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     clear: 'Limpar'
   }
 
-  get typeOptions():Array<any>{
+  get typeOptions(): Array<any>{
     return Object.entries(Entry.types).map(
-      ([value,text]) =>{
+      ([value, text]) => {
         return {
           text: text,
           value: value
@@ -58,7 +60,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       }
     )
   }
-
+  
   constructor(
     private toastr: ToastrService,
     private entryService: EntryService,
@@ -87,16 +89,16 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   
   }
 
-  private setBuildEntryForm() {
+  protected setBuildEntryForm() {
     this.entryForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
       description: [null],
-      type: ['expense', [Validators.required]],
+      type: ["expense", [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [true, [Validators.required]],
-      categoryId: [null, [Validators.required]],
+      categoryId: [null, [Validators.required]]
     });
   }
 
