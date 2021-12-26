@@ -14,6 +14,8 @@ export class Entry extends BaseResourceModel{
             super()
         }
 
+       
+
         static types = {
             expense : 'Despesa',
             revenue : 'Receita'
@@ -22,4 +24,8 @@ export class Entry extends BaseResourceModel{
         get paidText():string{
             return this.paid ? 'Pago' : 'Pedente';
         }
+
+        static fromJson(element: any){
+            return  Object.assign(new Entry(),element)
+          }
 }

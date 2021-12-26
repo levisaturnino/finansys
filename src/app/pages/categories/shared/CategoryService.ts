@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class CategoryService extends BaseResourceService<Category> {
 
   constructor(protected inject: Injector) {
-    super(`${API.address}/categories`, inject);
+    super(`${API.address}/categories`, inject,Category.fromJson);
   }
 
 }
