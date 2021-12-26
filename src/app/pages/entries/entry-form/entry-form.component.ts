@@ -8,12 +8,10 @@ import { EntryService } from '../shared/entry.service';
 import { switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../categories/shared/category.model';
-import { CategoryService } from '../../categories/shared/category.service';
+import { CategoryService } from "../../categories/shared/CategoryService";
 import { Type } from '../shared/type.model';
 import { TypeService } from '../shared/type.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-
 
 @Component({
   selector: 'app-entry-form',

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -11,11 +12,14 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule
   ],
   exports: [ CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule]
+    HttpClientModule,
+    MatDatepickerModule
+  ]
 })
 export class CoreModule { }

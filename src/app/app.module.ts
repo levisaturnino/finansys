@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule} from '@angular/material/datepicker';
 
 registerLocaleData(localePt);
 
@@ -13,10 +15,13 @@ registerLocaleData(localePt);
   declarations: [
     AppComponent
   ],
+  
   imports: [
     CoreModule,
     AppRoutingModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    MatDatepickerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class Category extends BaseResourceModel {\n  constructor(id, name, description) {\n    this.id = id;\n    this.name = name;\n    this.description = description;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}
