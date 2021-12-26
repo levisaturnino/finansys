@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ToastrModule } from 'ngx-toastr';
 
 import { IMaskModule } from 'angular-imask';
 import { CalendarModule} from 'primeng/calendar';    
@@ -13,7 +12,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     NgxSpinnerModule,
-    ToastrModule.forRoot(),
     ReactiveFormsModule,
     IMaskModule,
     CalendarModule,
@@ -22,7 +20,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   exports:[
     CommonModule,
     NgxSpinnerModule,
-    ToastrModule,
     ReactiveFormsModule,
     IMaskModule,
     CalendarModule,
