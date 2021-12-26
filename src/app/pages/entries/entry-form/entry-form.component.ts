@@ -120,8 +120,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private loadEntry() {
-    this.spinner.show()
     if (this.currentAction == "edit") {
+      this.spinner.show()
+
       this.route.paramMap.pipe(
         switchMap(parameter => this.entryService.getById(+parameter.get("id")!))
       ).subscribe(
@@ -139,9 +140,8 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private createEntry() {
-
-    const entry: Entry = Object.assign(new Entry(), this.entryForm.value)
     this.spinner.show()
+    const entry: Entry = Object.assign(new Entry(), this.entryForm.value)
     this.entryService.created(entry).subscribe(
       entry => {
       this.spinner.hide()
@@ -168,7 +168,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private actionsForSuccess(entry: Entry) {
     this.toastr.success("Solicitação processada com sucesso!");
-
+    this.spinner.hide()
     // redirect/reload component page
     this.router.navigateByUrl("entries", { skipLocationChange: true }).then(
       () => this.router.navigate(['entries', entry.id, "edit"])
@@ -177,7 +177,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   private actionsForError(error: any) {
     this.toastr.error("Ocorreu um erro ao processar a sua solicitação!");
-
+    this.spinner.hide()
     this.submittingForm = false
     if (error.status === 422) {
       this.serverErrorMessages = JSON.parse(error._body).errord
