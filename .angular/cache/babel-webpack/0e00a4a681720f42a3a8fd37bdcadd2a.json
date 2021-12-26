@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class Type {\n  constructor(value, text) {\n    this.value = value;\n    this.text = text;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

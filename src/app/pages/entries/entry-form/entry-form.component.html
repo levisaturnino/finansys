@@ -33,7 +33,7 @@
             
         <label for="type">Type</label>
         <select  formControlName="type" class="form-control" name="type" id="type" >
-          <option *ngFor="let type of typeOptions" [value]="type.value">{{ type.text }}</option>
+          <option *ngFor="let type of types" [value]="type.value">{{ type.text }}</option>
         </select>
         <div class="text-danger" *ngIf="entryForm.get('type')?.invalid && entryForm.get('type')?.touched">
           <div *ngIf="entryForm.get('type')?.errors?.required">Dados obrigatório</div>
@@ -100,13 +100,13 @@
   <div class="row">
         <!-- Categoria -->
         <div class="form-group col-4 mb-3">
-          <label for="categoryId">Categoria</label>
-          <select  formControlName="categoryId" class="form-control" name="categoryId" id="categoryId" >
+          <label for="category_id">Categoria</label>
+          <select  formControlName="category_id" class="form-control" name="category_id" id="category_id" >
             <option *ngFor="let category of categories" [value]="category?.id">{{category?.name}}</option>
           </select>
-          <div class="text-danger" *ngIf="entryForm.get('categoryId')?.invalid && entryForm.get('categoryId')?.touched">
-            <div *ngIf="entryForm.get('categoryId')?.errors?.required">Dados obrigatório</div>
-            <div *ngIf="entryForm.get('categoryId')?.errors?.minlength">deve ter no mínimo 2 caracteres</div>
+          <div class="text-danger" *ngIf="entryForm.get('category_id')?.invalid && entryForm.get('category_id')?.touched">
+            <div *ngIf="entryForm.get('category_id')?.errors?.required">Dados obrigatório</div>
+            <div *ngIf="entryForm.get('category_id')?.errors?.minlength">deve ter no mínimo 2 caracteres</div>
           </div>
         </div>
 
@@ -133,3 +133,6 @@
 
  <button type="submit" [disabled]="submittingForm || entryForm.invalid" class="btn btn-primary  mt-3 float-md-end">Salvar</button>
 </form>
+<ngx-spinner size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: #fff">Enviado Lançamento...</p>
+</ngx-spinner> 

@@ -13,7 +13,7 @@ export class Entry{
 
         static types = {
             expense : 'Despesa',
-            revenue: 'Receita'
+            revenue : 'Receita'
         }
 
         get paidText():string{

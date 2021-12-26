@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../shared/category.model';
 import { CategoryService } from '../shared/category.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-category-list',
@@ -11,12 +12,18 @@ export class CategoryListComponent implements OnInit {
 
   categories: Category[] = []
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, 
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show()
   this.categoryService.getAll().subscribe(
-      categories => this.categories = categories,
-      error => alert("Erro o carregar a lista")
+      categories => {
+        this.spinner.hide()
+        this.categories = categories},
+      error => {
+        this.spinner.hide()
+        alert("Erro o carregar a lista")}
     )
   }
 
@@ -24,9 +31,15 @@ export class CategoryListComponent implements OnInit {
 
     const mustDelete = confirm('Deseja realmente excluir esse item?')
     if(mustDelete){
+      this.spinner.show()
     this.categoryService.delete(category?.id!).subscribe(
-      () =>this.categories = this.categories.filter(element => element != category),
-      () => alert("Erro ao tentar excluír")
+      () =>{
+        this.spinner.hide()
+        this.categories = this.categories.filter(element => element != category)
+      },
+      () =>{ this.spinner.hide()
+        alert("Erro ao tentar excluír")
+      }
     )
   }
 }

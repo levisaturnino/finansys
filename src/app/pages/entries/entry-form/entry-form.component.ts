@@ -9,6 +9,9 @@ import { switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from '../../categories/shared/category.model';
 import { CategoryService } from '../../categories/shared/category.service';
+import { Type } from '../shared/type.model';
+import { TypeService } from '../shared/type.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -20,12 +23,15 @@ import { CategoryService } from '../../categories/shared/category.service';
 export class EntryFormComponent implements OnInit, AfterContentChecked {
 
   currentAction: string = ""
-  entryForm!: FormGroup;
+  entryForm!: FormGroup
   pageTitle: string = ""
   serverErrorMessages: string[] | undefined
   submittingForm: boolean = false
   entry: Entry = new Entry()
   categories: Array<Category> | undefined
+
+  types: Array<Type> | undefined
+
 
   imaskConfig = {
     mask: Number,
@@ -50,7 +56,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     clear: 'Limpar'
   }
 
-  get typeOptions(): Array<any>{
+  /*get typeOptions(): Array<any>{
     return Object.entries(Entry.types).map(
       ([value, text]) => {
         return {
@@ -59,15 +65,17 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
         }
       }
     )
-  }
+  }*/
   
   constructor(
     private toastr: ToastrService,
+    private typeService:TypeService,
     private entryService: EntryService,
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,) { }
 
   ngAfterContentChecked(): void {
     this.setPageTitle()
@@ -86,6 +94,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.setBuildEntryForm();         
     this.loadEntry();
     this.loadCategories();
+    this.typesOptions();
   
   }
 
@@ -94,11 +103,11 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
       description: [null],
-      type: ["expense", [Validators.required]],
+      type: ['expense', [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
       paid: [true, [Validators.required]],
-      categoryId: [null, [Validators.required]]
+      category_id: [null, [Validators.required]]
     });
   }
 
@@ -111,15 +120,20 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private loadEntry() {
+    this.spinner.show()
     if (this.currentAction == "edit") {
       this.route.paramMap.pipe(
         switchMap(parameter => this.entryService.getById(+parameter.get("id")!))
       ).subscribe(
         (entry) => {
+          this.spinner.hide()
           this.entry = entry;
           this.entryForm?.patchValue(entry)
         },
-        (error) => alert("Ocorreu um erro no servidor, tente mais tarde")
+        (error) => {
+          this.spinner.hide()
+          alert("Ocorreu um erro no servidor, tente mais tarde")
+        }
       )
     }
   }
@@ -127,20 +141,28 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   private createEntry() {
 
     const entry: Entry = Object.assign(new Entry(), this.entryForm.value)
-
+    this.spinner.show()
     this.entryService.created(entry).subscribe(
-      entry => this.actionsForSuccess(entry),
-      error => this.actionsForError(error)
+      entry => {
+      this.spinner.hide()
+       this.actionsForSuccess(entry)},
+     error =>{ 
+       this.spinner.hide()
+       this.actionsForError(error)}
     )
   }
 
   private updateEntry() {
 
     const entry: Entry = Object.assign(new Entry(), this.entryForm.value)
-
+    this.spinner.show()
     this.entryService.update(entry).subscribe(
-      entry => this.actionsForSuccess(entry),
-      error => this.actionsForError(error)
+      entry => {
+         this.spinner.hide()
+        this.actionsForSuccess(entry)},
+      error =>{ 
+        this.spinner.hide()
+        this.actionsForError(error)}
     )
   }
 
@@ -177,5 +199,9 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.categoryService.getAll().subscribe(
       categories => this.categories = categories
     )
+  }
+
+   typesOptions(){
+    return this.types = this.typeService.getTypeOptions()
   }
 }

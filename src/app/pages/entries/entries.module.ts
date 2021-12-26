@@ -8,6 +8,7 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
 import { IMaskModule } from 'angular-imask';
 import {CalendarModule} from 'primeng/calendar';    
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [EntryListComponent,EntryFormComponent],
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     IMaskModule,
     CalendarModule,
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule
     
   ]
 })

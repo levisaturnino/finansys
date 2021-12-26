@@ -7,6 +7,7 @@ import { CategoryService } from '../shared/category.service';
 
 import { switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-category-form',
@@ -27,7 +28,8 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService) { }
 
   ngAfterContentChecked(): void {
     this.setPageTitle()
@@ -65,24 +67,27 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
   private loadCategory() {
     if (this.currentAction == "edit") {
+      this.spinner.show()
       this.route.paramMap.pipe(
         switchMap(parameter => this.categoryService.getById(+parameter.get("id")!))
       ).subscribe(
         (category) => {
+          this.spinner.hide()
           this.category = category;
           this.categoryForm?.patchValue(category)
         },
-        (error) => alert("Ocorreu um erro no servidor, tente mais tarde")
+        (error) =>{ this.spinner.hide()
+           alert("Ocorreu um erro no servidor, tente mais tarde")
+        }
       )
     }
   }
 
   private createCategory() {
-
     const category: Category = Object.assign(new Category(), this.categoryForm.value)
-
+    this.spinner.show()
     this.categoryService.created(category).subscribe(
-      category => this.actionsForSuccess(category),
+      category =>{ this.actionsForSuccess(category)},
       error => this.actionsForError(error)
     )
   }
@@ -98,6 +103,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private actionsForSuccess(category: Category) {
+    this.spinner.hide()
     this.toastr.success("Solicitação processada com sucesso!");
 
     // redirect/reload component page
@@ -107,6 +113,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private actionsForError(error: any) {
+    this.spinner.hide()
     this.toastr.error("Ocorreu um erro ao processar a sua solicitação!");
 
     this.submittingForm = false
